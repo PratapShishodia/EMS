@@ -24,6 +24,11 @@ export function EmployeeComponent() {
           setEmail(response.data.email);
         })
         .catch((err) => {
+          if (err.response && err.response.data) {
+            alert(err.response.data.error);
+          } else {
+            alert("Something went wrong. Please try again later.");
+          }
           console.error(err);
         });
     }
@@ -44,15 +49,33 @@ export function EmployeeComponent() {
       const emp = { firstname, lastname, email };
       console.log(emp);
       if (id) {
-        updateemp(id, emp).then((response) => {
-          console.log(response.data);
-          navigator("/employee");
-        });
+        updateemp(id, emp)
+          .then((response) => {
+            console.log(response.data);
+            navigator("/employee");
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.error);
+            } else {
+              alert("Something went wrong. Please try again later.");
+            }
+            console.error(err);
+          });
       } else {
-        addemp(emp).then((response) => {
-          console.log(response.data);
-          navigator("/employee");
-        });
+        addemp(emp)
+          .then((response) => {
+            console.log(response.data);
+            navigator("/employee");
+          })
+          .catch((err) => {
+            if (err.response && err.response.data) {
+              alert(err.response.data.error);
+            } else {
+              alert("Something went wrong. Please try again later.");
+            }
+            console.error(err);
+          });
       }
     }
   }
