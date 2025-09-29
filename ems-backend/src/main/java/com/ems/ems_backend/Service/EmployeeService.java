@@ -4,6 +4,8 @@ import com.ems.ems_backend.DTO.EmployeeRequestDTO;
 import com.ems.ems_backend.DTO.EmployeeResponseDTO;
 import com.ems.ems_backend.DTOMapper.EmployeeDTOMapper;
 import com.ems.ems_backend.Entity.Employee;
+import com.ems.ems_backend.Exceptions.EmailIsAlreadyRegistered;
+import com.ems.ems_backend.Exceptions.EmployeeNotFoundException;
 import com.ems.ems_backend.Repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +25,22 @@ public class EmployeeService {
     }
 
     public EmployeeResponseDTO getbyID(int emp_id){
-        Employee employee = employeeRepository.findById(emp_id).get();
+        Employee employee = employeeRepository.findById(emp_id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID - "+emp_id+" not found"));
         return EmployeeDTOMapper.toDTO(employee);
     }
 
     public EmployeeResponseDTO addEmployee(EmployeeRequestDTO requestDTO){
         Employee employee = EmployeeDTOMapper.toEntity(requestDTO);
         if(employeeRepository.existsByEmail(requestDTO.getEmail())){
-            throw new RuntimeException("Email already in Use");
+            throw new EmailIsAlreadyRegistered("Email already in Use");
         }
         return EmployeeDTOMapper.toDTO(employeeRepository.save(employee));
     }
 
     public EmployeeResponseDTO updateEmployee(int emp_id,EmployeeRequestDTO requestDTO){
-        Employee employee = employeeRepository.findById(emp_id).get();
+        Employee employee = employeeRepository.findById(emp_id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID - "+emp_id+" not found"));
         if(employeeRepository.existsByEmailAndEmployeeIDNot(requestDTO.getEmail(), emp_id)){
-            throw new RuntimeException("Email already in Use");
+            throw new EmailIsAlreadyRegistered("Email already in Use");
         }
         employee.setEmail(requestDTO.getEmail());
         employee.setFirstname(requestDTO.getFirstname());
@@ -47,7 +49,7 @@ public class EmployeeService {
     }
 
     public String deleteEmployee(int emp_id){
-        Employee employee = employeeRepository.findById(emp_id).get();
+        Employee employee = employeeRepository.findById(emp_id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID - "+emp_id+" not found"));
         employeeRepository.delete(employee);
         return "Employee with Id - "+emp_id+" deleted Successfully";
     }

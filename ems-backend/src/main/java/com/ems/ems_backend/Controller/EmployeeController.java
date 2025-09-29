@@ -3,6 +3,7 @@ package com.ems.ems_backend.Controller;
 import com.ems.ems_backend.DTO.EmployeeRequestDTO;
 import com.ems.ems_backend.DTO.EmployeeResponseDTO;
 import com.ems.ems_backend.Service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponseDTO> addEmployee(@RequestBody EmployeeRequestDTO requestDTO){
+    public ResponseEntity<EmployeeResponseDTO> addEmployee(@Valid @RequestBody EmployeeRequestDTO requestDTO){
         return new ResponseEntity<>(employeeService.addEmployee(requestDTO), HttpStatus.CREATED);
     }
 
@@ -44,7 +45,7 @@ public class EmployeeController {
 //    }
 
     @PutMapping("/{emp_id}")
-    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable int emp_id,@RequestBody EmployeeRequestDTO requestDTO){
+    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable int emp_id,@Valid @RequestBody EmployeeRequestDTO requestDTO){
         return new ResponseEntity<>(employeeService.updateEmployee(emp_id,requestDTO), HttpStatus.CREATED);
     }
 
