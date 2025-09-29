@@ -27,10 +27,11 @@ Built with **React (frontend)**, **Spring Boot (backend)**, and **PostgreSQL (da
 ```bash
 git clone https://github.com/your-username/ems.git
 cd ems
-2. Backend (Spring Boot)
+
+### 2. Backend (Spring Boot)
 Navigate to backend folder:
 
-bash
+```bash
 Copy code
 cd backend
 Update PostgreSQL credentials in application.properties:
@@ -43,33 +44,33 @@ spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
 Run backend:
 
-bash
+```bash
 Copy code
 mvn spring-boot:run
 API will be available at:
 http://localhost:8080/api/employees
 
-3. Frontend (React)
+### 3. Frontend (React)
 Navigate to frontend folder:
 
-bash
+```bash
 Copy code
 cd frontend
 Install dependencies:
 
-bash
+```bash
 Copy code
 npm install
 Start React app:
 
-bash
+```bash
 Copy code
 npm start
 UI will be available at:
 http://localhost:3000
 
-📂 Project Structure
-bash
+### 📂 Project Structure
+```bash
 Copy code
 ems/
 │── backend/               # Spring Boot backend
